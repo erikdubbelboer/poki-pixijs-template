@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover" />
+
+        <title>poki-pixijs-topdown-template</title>
+
+        <script>
+            window.isDebug = (window.location.hostname === 'localhost') || (window.location.search.indexOf('gddebug') !== -1);
+            window.isMobile = typeof navigator !== 'undefined' && /(?:phone|windows\s+phone|ipod|blackberry|(?:android|bb\d+|meego|silk|googlebot) .+? mobile|palm|windows\s+ce|opera\smini|avantgo|mobilesafari|docomo)/i.test(navigator.userAgent);
+            window.iTablet = typeof navigator !== 'undefined' && /(?:ipad|playbook|(?:android|bb\d+|meego|silk)(?! .+? mobile))/i.test(navigator.userAgent);
+            window.isIpadOS = window.navigator.platform === 'MacIntel' && typeof window.navigator.standalone !== 'undefined' && navigator.maxTouchPoints > 1; // iPadOS 13+
+
+            // On mobile we want to show the eruda console button by default so we can debug the game.
+            if (window.isDebug && (isMobile || iTablet || isIpadOS)) {
+                document.write('<script src="https://cdn.jsdelivr.net/npm/eruda"><'+'/script>');
+                document.write('<script>window.eruda.init()<'+'/script>');
+            }
+        </script>
+
+        <link href="css/loader.css" rel="stylesheet" fetchpriority="high" />
+        <link rel="preload" fetchpriority="high" href="css/index.css" as="style" onload="this.onload=null;this.rel='stylesheet';window.cssLoaded=true">
+    </head>
+    <body>
+        <div id="loading-wrapper">
+            <div id="loading-splash">
+                <div id="loading-bar-container">
+                    <div id="loading-bar"></div>
+                </div>
+                <div id="loading-text">loading game...</div>
+            </div>
+        </div>
+
+        <div id="menu" style="display: none">
+            <div id="startgame">
+                <div id="startgame-text">Start Game</div>
+                <div id="startgame-loading-bar-container">
+                    <div id="startgame-loading-bar"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="resume-container" style="display: none">
+            <div id="resume-text">Game Paused</div>
+            <div id="resume-button">Resume</div>
+            <div id="exit-button">Exit</div>
+        </div>
+
+        <canvas id="canvas" style="display: none"></canvas>
+
+        <script>
+            (function() {
+                // It's very hard to show an accurate loading bar, so we fake it.
+                // It's better if the user keeps seeing some constant progress then showing it accurately in big steps.
+                const loadingBar = document.getElementById('loading-bar');
+                let loadingProgress = 5;
+                window.fakeLoadingInterval = setInterval(() => {
+                    loadingProgress = Math.min(loadingProgress + 2, 100);
+                    loadingBar.style.width = loadingProgress + '%';
+                    
+                    if (loadingProgress >= 100) {
+                        clearInterval(window.fakeLoadingInterval);
+                    }
+                }, 100);
+            })();
+        </script>
+
+        <!--
+            Load menu.js first but but defer the execution, so it can be downloaded and parsed while the other scripts are loading.
+            Load index.js async, so it can be downloaded and parsed while the other scripts are loading and executing.
+            And the load the Poki SDK sync as we'll need window.PokiSDK to be available before the game starts.
+            Doing things this way makes the Poki SDK not block the loading of the game too much.
+        -->
+        <script defer src="menu.js"></script>
+        <script async src="index.js"></script>
+        <script src="https://game-cdn.poki.com/scripts/v2/poki-sdk.js"></script>
+    </body>
+</html>

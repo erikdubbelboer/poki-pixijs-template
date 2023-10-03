@@ -1,0 +1,7 @@
+.DS_Store
+dist/
+node_modules/
+public/index.js
+public/index.js.map
+public/menu.js
+public/menu.js.map

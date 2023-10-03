@@ -1,0 +1,37 @@
+{
+    "scripts": {
+        "watch": "rollup -c -w --sourcemap",
+        "build": "rm -rf dist && rollup -c",
+        "format": "prettier --write .",
+        "lint": "eslint . && stylelint public/css/*.css"
+    },
+    "dependencies": {
+        "@pixi/assets": "7.3.1",
+        "@pixi/filter-outline": "^5.2.0",
+        "@pixi/particle-emitter": "^5.0.8",
+        "eventemitter3": "^3.1.0",
+        "howler": "^2.2.4",
+        "pixi.js": "7.3.1",
+        "stats.js": "^0.17.0"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.20.12",
+        "@babel/eslint-parser": "^7.19.1",
+        "@babel/preset-env": "^7.20.2",
+        "@rollup/plugin-babel": "^6.0.3",
+        "@rollup/plugin-commonjs": "^24.0.1",
+        "@rollup/plugin-node-resolve": "^15.0.1",
+        "@rollup/plugin-terser": "^0.4.0",
+        "avif": "^0.4.4",
+        "clean-css": "^5.3.2",
+        "eslint": "^8.31.0",
+        "eslint-config-prettier": "^8.6.0",
+        "html-minifier-terser": "^7.2.0",
+        "prettier": "^2.8.2",
+        "rollup": "^3.9.1",
+        "rollup-plugin-serve": "^2.0.2",
+        "stylelint": "^15.10.3",
+        "stylelint-config-standard": "^34.0.0",
+        "terser": "5.16.3"
+    }
+}
