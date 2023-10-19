@@ -334,6 +334,7 @@ export class Game extends EventEmitter {
     }
 
     // Execute f every frame.
+    // Returns a function that can be called to remove the tick.
     tick(f) {
         if (this.destroyed) {
             console.warn('add tick after destroy', f);
@@ -353,9 +354,24 @@ export class Game extends EventEmitter {
         };
     }
 
+    // Execute f once after the next frame.
+    // Returns a function that can be called to remove the tick.
+    tickOnce(f) {
+        if (this.destroyed) {
+            console.warn('add tickOnce after destroy', f);
+            return;
+        }
+
+        this.ticker.addOnce(f);
+        return () => {
+            this.ticker.remove(f);
+        };
+    }
+
     // Execute f every ms milliseconds of game time.
     // interval unlike window.setInterval will trigger
     // immediately and then wait for the interval unless startWithDelay is true.
+    // Returns a function that can be called to cancel the interval.
     interval(f, ms, startWithDelay = false) {
         if (!ms) {
             throw new Error('interval ms is 0');
@@ -386,6 +402,7 @@ export class Game extends EventEmitter {
     }
 
     // Execute f after ms milliseconds of game time.
+    // Returns a function that can be called to cancel the timeout.
     timeout(f, ms) {
         if (this.destroyed) {
             return;
