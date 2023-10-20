@@ -10,7 +10,7 @@ const velocityScale = 1;
 const scale = 0.5;
 const shootInterval = 200;
 
-const isTouchDevice = window.isMobile || window.iTablet || window.isIpadOS;
+const isTouchDevice = window.isMobile || window.isTablet || window.isIpadOS;
 
 // Example Ship class which can be controlled by the player.
 export class Ship extends PIXI.Container {

@@ -9,11 +9,11 @@
         <script>
             window.isDebug = (window.location.hostname === 'localhost') || (window.location.search.indexOf('gddebug') !== -1);
             window.isMobile = typeof navigator !== 'undefined' && /(?:phone|windows\s+phone|ipod|blackberry|(?:android|bb\d+|meego|silk|googlebot) .+? mobile|palm|windows\s+ce|opera\smini|avantgo|mobilesafari|docomo)/i.test(navigator.userAgent);
-            window.iTablet = typeof navigator !== 'undefined' && /(?:ipad|playbook|(?:android|bb\d+|meego|silk)(?! .+? mobile))/i.test(navigator.userAgent);
+            window.isTablet = typeof navigator !== 'undefined' && /(?:ipad|playbook|(?:android|bb\d+|meego|silk)(?! .+? mobile))/i.test(navigator.userAgent);
             window.isIpadOS = window.navigator.platform === 'MacIntel' && typeof window.navigator.standalone !== 'undefined' && navigator.maxTouchPoints > 1; // iPadOS 13+
 
             // On mobile we want to show the eruda console button by default so we can debug the game.
-            if (window.isDebug && (isMobile || iTablet || isIpadOS)) {
+            if (window.isDebug && (isMobile || isTablet || isIpadOS)) {
                 document.write('<script src="https://cdn.jsdelivr.net/npm/eruda"><'+'/script>');
                 document.write('<script>window.eruda.init()<'+'/script>');
             }
