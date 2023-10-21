@@ -188,6 +188,7 @@ export class Game extends EventEmitter {
 
         if (showMenu) {
             this.resumeText.innerText = 'PAUSED';
+            this.resumeButton.style.display = 'block';
             this.resumeContainer.style.display = 'flex';
         }
     }
@@ -608,6 +609,7 @@ export class Game extends EventEmitter {
             PIXI.Ticker.shared.stop();
 
             this.resumeText.innerText = 'GAME OVER';
+            this.resumeButton.style.display = 'none';
             this.resumeContainer.style.display = 'flex';
         }, 1000);
     }
