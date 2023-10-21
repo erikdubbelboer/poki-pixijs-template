@@ -34,18 +34,22 @@ function init(extension) {
         }
     });
 
+    // window.startGame is called by the menu to start the game.
     window.startGame = () => {
         if (gameStarted) {
             return;
         }
         gameStarted = true;
 
+        // When the loader isn't done yet, we show the loading screen
+        // and wait for the loader to finish.
         if (!loader.done) {
             if (loadingWrapper) {
                 loadingWrapper.style.display = 'block';
             }
 
             loader.once('done', () => {
+                // Set gameStarted to false so the check above works again.
                 gameStarted = false;
                 window.startGame();
             });
