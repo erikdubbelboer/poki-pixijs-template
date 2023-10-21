@@ -514,6 +514,18 @@ export class Game extends EventEmitter {
                 event.preventDefault();
                 break;
             }
+            // Space resumes the game if paused, or exits if gameover.
+            case 'Space': {
+                if (this.gameover) {
+                    this.exitHandler();
+                } else {
+                    // It's a bit hacky but it works.
+                    if (this.resumeContainer.style.display !== 'none') {
+                        this.resumeHandler();
+                    }
+                }
+                break;
+            }
         }
     }
 
