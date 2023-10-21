@@ -44,7 +44,7 @@ export class Sounds {
                             this.resumeMusic();
                         }, 1000);
                     },
-                    false
+                    false,
                 );
 
                 this.music = m;

@@ -39,7 +39,7 @@ if (process.argv.includes('-w')) {
             removeAttributeQuotes: true,
             removeComments: true,
             minifyJS: true,
-        })
+        }),
     );
 }
 

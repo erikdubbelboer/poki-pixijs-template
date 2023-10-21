@@ -34,7 +34,7 @@ export class Loader extends EventEmitter {
                     // Update our progress, but don't let it go below 10% or above 80%.
                     const p = Math.max(progress, 0.1) * 80;
                     this.loadingBar.style.width = p + '%';
-                }
+                },
             ).then(() => {
                 this.postload();
             });

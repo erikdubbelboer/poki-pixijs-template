@@ -280,7 +280,7 @@ export function randomPointInPolygon(polygon) {
                 maxY: Math.max(vertex.y, box.maxY),
             };
         },
-        { minX: Infinity, minY: Infinity, maxX: -Infinity, maxY: -Infinity }
+        { minX: Infinity, minY: Infinity, maxX: -Infinity, maxY: -Infinity },
     );
 
     let point;
