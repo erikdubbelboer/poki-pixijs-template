@@ -129,11 +129,15 @@ export class Ship extends PIXI.Container {
             if (this.cancelShoot) {
                 this.cancelShoot();
             }
-            // interval unlike window.setInterval will trigger
-            // immediately and then wait for the interval.
-            this.cancelShoot = game.interval(() => {
-                this.shoot(game);
-            }, shootInterval);
+
+            // Only shoot using the left mouse button.
+            if (event.button === 0) {
+                // interval unlike window.setInterval will trigger
+                // immediately and then wait for the interval.
+                this.cancelShoot = game.interval(() => {
+                    this.shoot(game);
+                }, shootInterval);
+            }
         };
         this.pointerUpHandler = () => {
             joystickStart = null;

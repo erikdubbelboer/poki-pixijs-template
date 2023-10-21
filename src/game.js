@@ -527,17 +527,8 @@ export class Game extends EventEmitter {
             y = -tmp;
         }
 
-        // As an example we make clicking on an asteroid hit it.
-        for (let i = 0; i < this.asteroidsContainer.children.length; i++) {
-            const asteroid = this.asteroidsContainer.children[i];
-
-            const dx = asteroid.x - x;
-            const dy = asteroid.y - y;
-            const d = Math.sqrt(dx * dx + dy * dy);
-
-            if (d < asteroid.size / 2) {
-                asteroid.hit(this);
-            }
+        if (event.button === 2) {
+            console.log('right mouse click at', x, y);
         }
     }
 

@@ -8,6 +8,10 @@ function init(extension) {
     const loader = new Loader(canvas, extension);
     let gameStarted = false;
 
+    window.addEventListener('contextmenu', (event) => {
+        event.preventDefault();
+    });
+
     window.addEventListener('pagehide', () => {
         if (loader.sounds) {
             loader.sounds.pauseMusic();
