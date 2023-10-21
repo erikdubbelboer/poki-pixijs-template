@@ -6,6 +6,7 @@ import { spawnExplosion } from './effects';
 const PI = Math.PI;
 
 const numImages = 4;
+const outlineSize = 6;
 const outlines = [];
 
 // Create the outline textures for the asteroids.
@@ -15,16 +16,20 @@ export function init(app) {
         const c = new PIXI.Container();
         const p = PIXI.Sprite.from(`asteroid${i}.png`);
 
-        const width = p.width;
-        const height = p.height;
+        const width = p.width + outlineSize * 2;
+        const height = p.height + outlineSize * 2;
 
-        p.position.x = p.width / 2;
-        p.position.y = p.height / 2;
+        c.width = width;
+        c.height = height;
+
+        // Add the sprite to the container, centered.
+        p.position.x = width / 2;
+        p.position.y = height / 2;
         p.anchor.set(0.5);
         c.addChild(p);
 
         // For more filters, see: http://filters.pixijs.download/dev/demo/index.html
-        c.filters = [new OutlineFilter(6, 0xff2222, 1, 1, true)];
+        c.filters = [new OutlineFilter(outlineSize, 0xff2222, 1, 1, true)];
 
         const t = PIXI.RenderTexture.create({ width, height });
         app.renderer.render(c, { renderTexture: t });
@@ -78,8 +83,8 @@ export class Asteroid extends PIXI.Container {
         this.sprite.width *= scale;
         this.sprite.height *= scale;
 
-        this.outline.width = this.sprite.width;
-        this.outline.height = this.sprite.height;
+        this.outline.width = this.sprite.width + outlineSize * 2;
+        this.outline.height = this.sprite.height + outlineSize * 2;
 
         this.size = Math.max(this.sprite.width, this.sprite.height);
     }
