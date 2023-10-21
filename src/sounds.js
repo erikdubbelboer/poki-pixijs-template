@@ -117,6 +117,8 @@ export class Sounds {
         }
     }
 
+    // play a sound with the given name.
+    // returns the ID of the sound that was played which can be passed to stop(), seek() and volume().
     play(name, noOverlap = false) {
         if (!this.usable) {
             return;
@@ -133,20 +135,25 @@ export class Sounds {
             return;
         }
 
-        this.sounds[name].play();
+        return this.sounds[name].play();
     }
 
     // stop all sounds with the given name.
-    stop(name) {
+    // if id is given, only stop that specific sound.
+    stop(name, id) {
         delete this.queued[name];
 
         if (!this.playing[name]) {
             return;
         }
 
-        const ids = Object.keys(this.playing[name]);
-        for (let j = 0; j < ids.length; j++) {
-            this.sounds[name].stop(Number(ids[j]));
+        if (id) {
+            this.sounds[name].stop(id);
+        } else {
+            const ids = Object.keys(this.playing[name]);
+            for (let j = 0; j < ids.length; j++) {
+                this.sounds[name].stop(Number(ids[j]));
+            }
         }
     }
 
@@ -228,7 +235,7 @@ export class Sounds {
         }
     }
 
-    seek(name, s) {
+    seek(name, s, id) {
         if (!this.usable) {
             return;
         }
@@ -236,10 +243,10 @@ export class Sounds {
             return;
         }
 
-        this.sounds[name].seek(s);
+        this.sounds[name].seek(s, id);
     }
 
-    volume(name, v) {
+    volume(name, v, id) {
         if (!this.usable) {
             return;
         }
@@ -247,7 +254,7 @@ export class Sounds {
             return;
         }
 
-        this.sounds[name].volume(v * baseVolume);
+        this.sounds[name].volume(v * baseVolume, id);
     }
 
     rate(r) {
