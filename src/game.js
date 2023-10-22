@@ -319,7 +319,7 @@ export class Game extends EventEmitter {
 
         this.setWorldScale(this.worldScale);
 
-        if ((window.isMobile || window.isTablet) && ratio < 1) {
+        if (ratio < 1) {
             this.worldContainer.rotation = Math.PI / 2;
             this.halfScreenWidth = this.screenHeight / 2;
             this.halfScreenHeight = this.screenWidth / 2;

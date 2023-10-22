@@ -166,6 +166,13 @@ export class Ship extends PIXI.Container {
 
                 this.joystickMove = { x, y };
 
+                if (game.portrait) {
+                    // In portrait mode, the ship is rotated 90 degrees.
+                    const tmp = this.joystickMove.x;
+                    this.joystickMove.x = this.joystickMove.y;
+                    this.joystickMove.y = -tmp;
+                }
+
                 this.pointerRotation = Math.atan2(this.joystickMove.y, this.joystickMove.x) + PI05;
                 this.pointerMove = false;
             } else {
@@ -189,7 +196,7 @@ export class Ship extends PIXI.Container {
         this.pointerY = y;
     }
 
-    update(delta) {
+    update(delta, game) {
         let dx = 0;
         let dy = 0;
         const d = 0.01;
@@ -205,6 +212,13 @@ export class Ship extends PIXI.Container {
         }
         if (this.down) {
             dy = delta * this.speed * d;
+        }
+
+        if (game.portrait) {
+            // In portrait mode, the ship is rotated 90 degrees.
+            const tmp = dx;
+            dx = dy;
+            dy = -tmp;
         }
 
         if (this.joystickMove) {
@@ -252,6 +266,11 @@ export class Ship extends PIXI.Container {
             }
         } else if (this.down) {
             this.wantRotation = 180 * (PI / 180);
+        }
+
+        if (game.portrait) {
+            // In portrait mode, the ship is rotated 90 degrees.
+            this.wantRotation -= PI05;
         }
 
         // We ain for the player cursor, unless the player hasn't moved
