@@ -35,7 +35,6 @@ export class Game extends EventEmitter {
 
         // When the user switches tabs or minimizes the window we pause the game.
         this.pageHideBlurHandler = () => {
-            this.app.ticker.stop();
             PIXI.Ticker.shared.stop();
             if (this.ticker.started) {
                 // Show the paused menu.
@@ -163,7 +162,6 @@ export class Game extends EventEmitter {
             this.sounds.resumeMusic();
 
             this.ticker.start();
-            this.app.ticker.start();
             PIXI.Ticker.shared.start();
         }, ms || 0);
     }
@@ -195,7 +193,6 @@ export class Game extends EventEmitter {
 
     setup() {
         this.ticker.start();
-        this.app.ticker.start();
         PIXI.Ticker.shared.start();
 
         // We put the whole world in a container so we can pivot it around the player if needed.
@@ -677,7 +674,6 @@ export class Game extends EventEmitter {
             clearTimeout(this.resumeTimeout);
         }
 
-        this.app.ticker.stop();
         PIXI.Ticker.shared.stop();
 
         this.ticker.destroy();
