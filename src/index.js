@@ -76,19 +76,41 @@ function init(extension) {
     };
 }
 
-const avif = new Image();
-avif.addEventListener('load', () => {
-    init('.avif');
-});
-avif.addEventListener('error', () => {
-    const webp = new Image();
-    webp.addEventListener('load', () => {
-        init('.webp');
-    });
-    webp.addEventListener('error', () => {
-        init('.png');
-    });
-    webp.src = 'data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=';
-});
-avif.src =
-    'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgANogQEAwgMg8f8D///8WfhwB8+ErK42A=';
+function supportsImg(data, cb) {
+    if (!window.createImageBitmap) {
+        cb(false);
+        return;
+    }
+
+    fetch(data)
+        .then((r) => {
+            r.blob()
+                .then((blob) => {
+                    createImageBitmap(blob)
+                        .then(
+                            () => cb(true),
+                            () => cb(false),
+                        )
+                        .catch(() => cb(false));
+                })
+                .catch(() => cb(false));
+        })
+        .catch(() => cb(false));
+}
+
+supportsImg(
+    'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgANogQEAwgMg8f8D///8WfhwB8+ErK42A=',
+    (supported) => {
+        if (supported) {
+            init('.avif');
+        } else {
+            supportsImg('data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=', (supported) => {
+                if (supported) {
+                    init('.webp');
+                } else {
+                    init('.png');
+                }
+            });
+        }
+    },
+);
