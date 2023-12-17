@@ -293,3 +293,16 @@ export function randomPointInPolygon(polygon) {
 
     return point;
 }
+
+export function isSafari14OrLower() {
+    const userAgent = navigator.userAgent;
+    const isSafari = userAgent.includes('Safari') && !userAgent.includes('Chrome') && !userAgent.includes('Chromium');
+    const versionMatch = userAgent.match(/Version\/(\d+\.\d+)/);
+
+    if (isSafari && versionMatch) {
+        const version = parseFloat(versionMatch[1]);
+        return version <= 14;
+    }
+
+    return false;
+}

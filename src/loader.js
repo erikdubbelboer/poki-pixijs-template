@@ -4,6 +4,7 @@ import { default as EventEmitter } from 'eventemitter3';
 
 import { init as initAsteroid } from './asteroid';
 import { Sounds } from './sounds';
+import { isSafari14OrLower } from './util';
 
 export class Loader extends EventEmitter {
     // extension is the best file format extension for the current browser.
@@ -16,6 +17,12 @@ export class Loader extends EventEmitter {
 
         // Set the default batch size to 10k so things like ropes are properly batched.
         PIXI.Mesh.BATCHABLE_SIZE = 10000;
+
+        // iOS 14 and lower have a bug in their WebGL implementation that causes
+        // PixiJS to crash when using the new WebGL2 renderer.
+        if (isSafari14OrLower()) {
+            PIXI.settings.PREFER_ENV = PIXI.ENV.WEBGL_LEGACY;
+        }
 
         this.loadingBar = document.getElementById('loading-bar');
         this.loadingText = document.getElementById('loading-text');
