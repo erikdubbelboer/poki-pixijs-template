@@ -80,6 +80,8 @@ Before diving in, let's familiarize ourselves with the main files and their resp
 
     This will start a local server at `http://localhost:8080/` to serve the `public/` directory and watch for changes in the `src/` directory.
 
+    You can now test your game by opening the [Poki Inspector](https://inspector.poki.dev/?game=external-http%253Alocalhost%253A8080) or [localhost](http://localhost:8080/) in your browser.
+
 4. For production, build the game:
     ```bash
     yarn build
@@ -88,7 +90,7 @@ Before diving in, let's familiarize ourselves with the main files and their resp
 
 ## Games build with this template
 
--   [Silly Sky](https://inspector.poki.dev/?game=poki-a036c257-2296-47bb-9301-1cc71b1aeeba)
+-   [Silly Sky](https://poki.com/en/g/silly-sky)
 -   [Million Spaceships (in early stage)](https://inspector.poki.dev/?game=upload-ckerd559qpsb0ojimi6g)
 
 ## Contribution
