@@ -296,8 +296,8 @@ export class Game extends EventEmitter {
     }
 
     resize() {
-        let width = window.innerWidth;
-        let height = window.innerHeight;
+        const width = window.innerWidth;
+        const height = window.innerHeight;
 
         const m = 1200 / Math.max(width, height);
 
@@ -407,7 +407,7 @@ export class Game extends EventEmitter {
         }
 
         let next = ms;
-        let rm;
+        let rm = () => {};
         const cb = () => {
             if (this.destroyed) {
                 return;

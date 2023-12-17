@@ -42,15 +42,22 @@ export class Loader extends EventEmitter {
                     const p = Math.max(progress, 0.1) * 80;
                     this.loadingBar.style.width = p + '%';
                 },
-            ).then(() => {
-                this.postload();
-            });
+            )
+                .then(() => {
+                    this.postload();
+                })
+                .catch((err) => {
+                    console.error(err);
+
+                    // Hope for the best and continue.
+                    this.postload();
+                });
         });
     }
 
     postload() {
-        let width = window.innerWidth * 1.2;
-        let height = window.innerHeight * 1.2;
+        const width = window.innerWidth * 1.2;
+        const height = window.innerHeight * 1.2;
 
         this.app = new PIXI.Application({
             width,

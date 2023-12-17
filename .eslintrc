@@ -4,6 +4,20 @@
     "env": {
         "browser": true
     },
+    "rules": {
+        "eqeqeq": 1,
+        "no-else-return": 1,
+        "no-invalid-this": 1,
+        "no-redeclare": 1,
+        "no-sequences": 1,
+        "no-undef-init": 1,
+        "no-unmodified-loop-condition": 1,
+        "no-unneeded-ternary": 1,
+        "no-unused-expressions": 1,
+        "no-use-before-define": 1,
+        "no-var": 1,
+        "prefer-const": 1
+    },
     "globals": {
         "PokiSDK": "readonly"
     }

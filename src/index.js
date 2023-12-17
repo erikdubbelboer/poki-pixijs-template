@@ -68,6 +68,7 @@ function init(extension) {
 
         window.game = new Game(loader).once('done', () => {
             gameStarted = false;
+            window.game = null;
 
             canvas.style.display = 'none';
 

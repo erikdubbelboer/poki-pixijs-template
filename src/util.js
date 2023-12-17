@@ -21,16 +21,32 @@ export function easeOutSine(x) {
 // Distances
 
 export function linePointDistance(p1, p2, c) {
-    var ac = { x: c.x - p1.x, y: c.y - p1.y };
-    var ab = { x: p2.x - p1.x, y: p2.y - p1.y };
-    var ab2 = dot(ab, ab);
-    var acab = dot(ac, ab);
-    var t = acab / ab2;
+    const ac = { x: c.x - p1.x, y: c.y - p1.y };
+    const ab = { x: p2.x - p1.x, y: p2.y - p1.y };
+    const ab2 = dot(ab, ab);
+    const acab = dot(ac, ab);
+    let t = acab / ab2;
     t = t < 0 ? 0 : t;
     t = t > 1 ? 1 : t;
-    var h = { x: ab.x * t + p1.x - c.x, y: ab.y * t + p1.y - c.y };
-    var h2 = dot(h, h);
+    const h = { x: ab.x * t + p1.x - c.x, y: ab.y * t + p1.y - c.y };
+    const h2 = dot(h, h);
     return Math.sqrt(h2);
+}
+
+// Functions related to colors
+
+// lerpColor lerps between two colors in 0xrrggbb format.
+export function lerpColor(a, b, t) {
+    const ar = (a >> 16) & 0xff;
+    const ag = (a >> 8) & 0xff;
+    const ab = a & 0xff;
+    const br = (b >> 16) & 0xff;
+    const bg = (b >> 8) & 0xff;
+    const bb = b & 0xff;
+    const rr = ar + (br - ar) * t;
+    const rg = ag + (bg - ag) * t;
+    const rb = ab + (bb - ab) * t;
+    return (rr << 16) | (rg << 8) | rb;
 }
 
 // Lines
@@ -60,12 +76,12 @@ export function smoothLine(g, from, to, fromSize, toSize, fromColor, toColor, fr
 
 // lineLineIntersection returns true if the lines intersect, false otherwise.
 export function lineLineIntersection(p1, p2, p3, p4) {
-    var s1_x = p2.x - p1.x;
-    var s1_y = p2.y - p1.y;
-    var s2_x = p4.x - p3.x;
-    var s2_y = p4.y - p3.y;
-    var s = (-s1_y * (p1.x - p3.x) + s1_x * (p1.y - p3.y)) / (-s2_x * s1_y + s1_x * s2_y);
-    var t = (s2_x * (p1.y - p3.y) - s2_y * (p1.x - p3.x)) / (-s2_x * s1_y + s1_x * s2_y);
+    const s1_x = p2.x - p1.x;
+    const s1_y = p2.y - p1.y;
+    const s2_x = p4.x - p3.x;
+    const s2_y = p4.y - p3.y;
+    const s = (-s1_y * (p1.x - p3.x) + s1_x * (p1.y - p3.y)) / (-s2_x * s1_y + s1_x * s2_y);
+    const t = (s2_x * (p1.y - p3.y) - s2_y * (p1.x - p3.x)) / (-s2_x * s1_y + s1_x * s2_y);
     return s >= 0 && s <= 1 && t >= 0 && t <= 1;
 }
 
@@ -125,15 +141,15 @@ export function lineBoxIntersection(v1, v2, box) {
 
 // polygonPolygonIntersection returns true if the polygons intersect, false otherwise.
 export function polygonPolygonIntersection(points1, points2) {
-    var a = points1;
-    var b = points2;
-    var polygons = [a, b];
-    var minA, maxA, projected, minB, maxB, j;
-    for (var i = 0; i < polygons.length; i++) {
-        var polygon = polygons[i];
-        for (var i1 = 0; i1 < polygon.length; i1 += 2) {
-            var i2 = (i1 + 2) % polygon.length;
-            var normal = { x: polygon[i2 + 1] - polygon[i1 + 1], y: polygon[i1] - polygon[i2] };
+    const a = points1;
+    const b = points2;
+    const polygons = [a, b];
+    let minA, maxA, projected, minB, maxB, j;
+    for (let i = 0; i < polygons.length; i++) {
+        const polygon = polygons[i];
+        for (let i1 = 0; i1 < polygon.length; i1 += 2) {
+            const i2 = (i1 + 2) % polygon.length;
+            const normal = { x: polygon[i2 + 1] - polygon[i1 + 1], y: polygon[i1] - polygon[i2] };
             minA = maxA = null;
             for (j = 0; j < a.length; j += 2) {
                 projected = normal.x * a[j] + normal.y * a[j + 1];
@@ -228,22 +244,6 @@ export function rotateXY(p, angle) {
     };
 }
 
-// Functions related to colors
-
-// lerpColor lerps between two colors in 0xrrggbb format.
-export function lerpColor(a, b, t) {
-    const ar = (a >> 16) & 0xff;
-    const ag = (a >> 8) & 0xff;
-    const ab = a & 0xff;
-    const br = (b >> 16) & 0xff;
-    const bg = (b >> 8) & 0xff;
-    const bb = b & 0xff;
-    const rr = ar + (br - ar) * t;
-    const rg = ag + (bg - ag) * t;
-    const rb = ab + (bb - ab) * t;
-    return (rr << 16) | (rg << 8) | rb;
-}
-
 // Randomness functions
 
 // mulberry32 is a fast deterministic random number generator.
@@ -263,7 +263,7 @@ export function mulberry32(a) {
 export function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         // Generate a random index between 0 and i
-        let j = Math.floor(Math.random() * (i + 1));
+        const j = Math.floor(Math.random() * (i + 1));
 
         // Swap elements at index i and j
         [array[i], array[j]] = [array[j], array[i]];
